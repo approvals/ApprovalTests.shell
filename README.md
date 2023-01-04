@@ -2,6 +2,8 @@
 
 **Note:** only tested with bash.
 
+![CI](https://github.com/approvals/ApprovalTests.shell/actions/workflows/ci.yml/badge.svg)
+
 ## Background
 
 This is a minimal [Approval-Tests](http://approvaltests.com/) utility for the cli.
