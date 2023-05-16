@@ -26,4 +26,4 @@ touch "$approved"
 
 diff -q "$received" "$approved" > /dev/null \
     && (echo "test passed"; rm "$received") \
-    || (echo "test failed"; eval "$diff_tool '$received' '$approved'"; false)
+    || (echo "test failed"; $diff_tool "$received" "$approved" </dev/tty; false)
