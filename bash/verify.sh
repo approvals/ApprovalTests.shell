@@ -49,9 +49,14 @@ function fail_and_diff(){
 }
 
 
+function pass_and_rm(){
+    pass; rm "$received"
+}
+
+
 function compare_and_approve(){
     diff -q "$received" "$approved" > /dev/null \
-	&& (pass; rm "$received") \
+	&& (pass_and_rm) \
 	|| (fail_and_diff)
 }
 
