@@ -3,6 +3,7 @@
 default_diff_tool="code --diff"
 diff_tool=$default_diff_tool
 
+function main(){
 while getopts ":r:t:d:" opt; do
   case $opt in
     d) diff_tool=$OPTARG;;
@@ -33,3 +34,6 @@ diff -q "$received" "$approved" > /dev/null \
             $diff_tool "$received" "$approved"
         fi;
         false)
+}
+
+main
