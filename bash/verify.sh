@@ -38,16 +38,14 @@ function fail(){
     echo "test failed" 
 }
 
-function compare_and_approve(){
-    diff -q "$received" "$approved" > /dev/null \
-	&& (pass; rm "$received") \
-	|| (fail;
+function fail_and_diff(){
+    fail;
     if [ -e /dev/tty ]; then
 	$diff_tool "$received" "$approved" </dev/tty
     else
 	$diff_tool "$received" "$approved"
     fi;
-	    false)
+    false
 }
 
 
