@@ -28,11 +28,19 @@ function main(){
     compare_and_approve
 }
 
+function pass(){ 
+    echo "test passed" 
+}
+
+
+function fail(){
+    echo "test failed" 
+}
 
 function compare_and_approve(){
     diff -q "$received" "$approved" > /dev/null \
-	&& (echo "test passed"; rm "$received") \
-	|| (echo "test failed";
+	&& (pass; rm "$received") \
+	|| (fail;
 	    if [ -e /dev/tty ]; then
 		$diff_tool "$received" "$approved" </dev/tty
 	    else
