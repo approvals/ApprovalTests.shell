@@ -35,6 +35,7 @@ function main(){
     compare_and_approve
 }
 
+
 function pass(){ 
     echo "test passed" 
 }
@@ -55,14 +56,15 @@ function fail_and_diff(){
 }
 
 
-function pass_and_rm(){
-    pass; rm "$received"
+function pass_and_rm_received(){
+    pass; 
+    rm "$received"
 }
 
 
 function compare_and_approve(){
     diff -q "$received" "$approved" > /dev/null \
-	&& (pass_and_rm) \
+	&& (pass_and_rm_recieved) \
 	|| (fail_and_diff)
 }
 
