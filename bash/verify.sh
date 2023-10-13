@@ -3,12 +3,18 @@
 default_diff_tool="code --diff"
 diff_tool=$default_diff_tool
 
+
+function warn(){
+    echo "$*" >&2
+}
+
+
 while getopts ":r:t:d:" opt; do
     case $opt in
 	d) diff_tool=$OPTARG;;
 	r) received_text=$OPTARG;;
 	t) test_name=$OPTARG;;
-	\?) echo "Invalid option: -$OPTARG" >&2;;
+	\?) warn "Invalid option: -$OPTARG";;
     esac
 done
 
