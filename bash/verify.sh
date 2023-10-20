@@ -9,17 +9,29 @@ function warn(){
 }
 
 
-while getopts ":r:t:d:" opt; do
+while getopts ":r:t:d:D" opt; do
     case $opt in
 	d) diff_tool=$OPTARG;;
 	r) received_text=$OPTARG;;
 	t) test_name=$OPTARG;;
+	D) debug_without_compare_and_approve="true";;
 	\?) warn "Invalid option: -$OPTARG";;
     esac
 done
 
+if [[ "${test_name}" == '' ]]
+then
+    test_name="unspecified_test_name"
+fi
+
 received="$test_name.received"
 approved="$test_name.approved"
+
+function debug_arguments(){
+    cat <<REPORT
+$0 -d '$diff_tool' -r '$received_text' -t '$test_name'
+REPORT
+}
 
 
 function main(){
@@ -32,21 +44,27 @@ function main(){
 
     touch "$approved"
 
-    compare_and_approve
+    if [[ -n "$debug_without_compare_and_approve" ]]
+    then
+        debug_arguments;
+    else
+        compare_and_approve $test_name;
+    fi
 }
 
 
 function pass(){ 
-    echo "test passed" 
+    echo "${1:unnamed-test} passed" 
 }
 
 
 function fail(){
-    echo "test failed" 
+    echo "${1:unnamed-test} failed" 
 }
 
+
 function fail_and_diff(){
-    fail;
+    fail $1;
     if [ -e /dev/tty ]; then
 	$diff_tool "$received" "$approved" </dev/tty
     else
@@ -57,15 +75,15 @@ function fail_and_diff(){
 
 
 function pass_and_rm_received(){
-    pass; 
+    pass $1; 
     rm "$received"
 }
 
 
 function compare_and_approve(){
     diff -q "$received" "$approved" > /dev/null \
-	&& (pass_and_rm_recieved) \
-	|| (fail_and_diff)
+	&& (pass_and_rm_received $1) \
+	|| (fail_and_diff $1)
 }
 
 
