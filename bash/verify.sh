@@ -34,7 +34,7 @@ while getopts ":r:t:d:D" opt; do
     esac
 done
 
-if [[ "${test_name}" == '' ]]
+if [[ "${test_name=}" == '' ]]
 then
     test_name="unspecified_test_name"
 fi
