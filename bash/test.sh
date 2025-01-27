@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 echo "test: pass"
 ./verify.sh -t test1 <<< "test 1 approves this message
