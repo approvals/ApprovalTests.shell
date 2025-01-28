@@ -16,3 +16,7 @@ jobs:
       - name: test bash verify.sh
         run: ./test.sh | ./verify.sh -t verify-cli-bash
         working-directory: bash
+
+      - name: failure returns non-zero exit code
+        run: '! (./verify.sh -t failing-test -d echo <<< "input")'
+        working-directory: bash
