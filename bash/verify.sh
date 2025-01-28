@@ -30,7 +30,7 @@ diff -q "$received" "$approved" >/dev/null &&
     ) ||
     (
         echo "test failed"
-        if [ -e /dev/tty ]; then
+        if [ -t 1 ]; then
             $diff_tool "$received" "$approved" </dev/tty
         else
             $diff_tool "$received" "$approved"
